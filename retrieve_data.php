@@ -1,29 +1,32 @@
 <?php
+header('Content-Type: application/json');
+
 $servername = "107.180.1.16";
 $username = "sprc2023team3";
 $password = "sprc2023team3";
 $dbname = "sprc2023team3";
 
+$email = $_POST['email'];
+$password = $_POST['password'];
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
 }
 
-$sql = "SELECT id, name, email FROM myTable";
-$result = $conn->query($sql);
+$sql = "SELECT * FROM myTable WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
 
-$data = array();
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
+if ($row) {
+    echo json_encode($row);
 } else {
-    echo "0 results";
+    echo json_encode(['error' => 'User not found']);
 }
-
-echo json_encode($data);
 
 $conn->close();
 ?>
