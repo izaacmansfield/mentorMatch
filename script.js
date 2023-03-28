@@ -20,6 +20,7 @@ async function checkLogin(event) {
     alert("Error: " + data.error);
   } else if (data.password === password) {
     alert("Login successful!");
+    console.log('Successful!!')
     // Redirect to a protected page or perform other actions upon successful login
   } else {
     alert("Incorrect password. Please try again.");

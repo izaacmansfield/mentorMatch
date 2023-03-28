@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 }
 
 if ($action === 'login') {
-    $sql = "SELECT * FROM users WHERE email = ?";
+    $sql = "SELECT * FROM new_user WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -31,7 +31,7 @@ if ($action === 'login') {
         echo json_encode(['error' => 'User not found']);
     }
 } elseif ($action === 'create_account') {
-    $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO new_user (name, email, password) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $name, $email, $user_password);
 
