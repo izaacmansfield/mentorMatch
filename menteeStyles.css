@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
+body{
+	font-family: 'Poppins', sans-serif;
+	font-weight: 300;
+	line-height: 1.7;
+	color: #ffeba7;
+	background-color: #1f2029;
+    text-align: center;
+}
+
+.container {
+    position: relative;
+  }
+  
+  .checkmark {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: green;
+  }
+  
+  .xmark {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: red;
+  }
