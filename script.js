@@ -49,7 +49,7 @@ async function createAccount(event) {
 
   if (data.success) {
     alert("Account created successfully!");
-    window.location.href = "./MenteePage.html";
+    window.location.href = "./login.html";
     // Redirect to a login page or perform other actions upon successful account creation
   } else {
     alert("Error: " + data.error);
