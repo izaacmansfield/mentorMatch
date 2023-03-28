@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $servername = "107.180.1.16";
 $username = "sprc2023team3";
 $password = "sprc2023team3";
@@ -45,4 +46,5 @@ if ($action === 'login') {
 }
 
 $conn->close();
+}
 ?>

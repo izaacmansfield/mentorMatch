@@ -20,7 +20,7 @@ async function checkLogin(event) {
     alert("Error: " + data.error);
   } else if (data.password === password) {
     alert("Login successful!");
-    console.log('Successful!!')
+    window.location.href = "./MenteePage.html";
     // Redirect to a protected page or perform other actions upon successful login
   } else {
     alert("Incorrect password. Please try again.");
@@ -49,6 +49,7 @@ async function createAccount(event) {
 
   if (data.success) {
     alert("Account created successfully!");
+    window.location.href = "./MenteePage.html";
     // Redirect to a login page or perform other actions upon successful account creation
   } else {
     alert("Error: " + data.error);
