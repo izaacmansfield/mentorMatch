@@ -25,6 +25,7 @@
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">Log In</h4>
 											<div class="form-group">
+												<form onsubmit="checkLogin(event)">
 												<input type="email" class="form-style" placeholder="Email" id="email" required>
 												<i class="input-icon uil uil-at"></i>
 											</div>	
@@ -32,7 +33,8 @@
 												<input type="password" class="form-style" placeholder="Password" id="password" required>
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
-											<button onclick="fetchData()" class="btn mt-4">Login</button>
+											<button type="submit" class="btn mt-4">Login</button>
+										</form>
                       <!-- <p class="mb-0 mt-4 text-center"><a href="https://www.web-leb.com/code" class="link">Forgot your password?</a></p> -->
 				      					</div>
 			      					</div>
@@ -50,20 +52,22 @@
 												<i class="input-icon uil uil-phone"></i>
 											</div>	 -->
                                             <div class="form-group mt-2">
-												<input type="email" class="form-style" placeholder="Email" id="newemail">
+												<form onsubmit="createAccount(event)">
+												<input type="email" class="form-style" placeholder="Email" id="newemail" required>
 												<i class="input-icon uil uil-at"></i>
 											</div>
 											<div class="form-group mt-2">
-												<input type="password" class="form-style" placeholder="Password" id="newpassword">
+												<input type="password" class="form-style" placeholder="Password" id="newpassword" required>
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
                                             <div class="form-group mt-2">
-												<input type="radio" id="mentorselected" name="userselection" value="mentor">
+												<input type="radio" id="mentorselected" name="userselection" value="0">
                                                 <label for="mentorselected">I want to be a mentor!</label><br>
-                                                <input type="radio" id="menteeselected" name="userselection" value="mentee">
+                                                <input type="radio" id="menteeselected" name="userselection" value="1">
                                                 <label for="menteeselected">I want to be a mentee!</label> 
 											</div>
-											<a href="https://www.web-leb.com/code" class="btn mt-4">Register</a>
+											<button type="submit" class="btn mt-4">Create Account</button>
+											</form>
 				      					</div>
 			      					</div>
 			      				</div>
