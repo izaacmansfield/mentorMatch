@@ -20,7 +20,7 @@ async function checkLogin(event) {
     alert("Error: " + data.error);
   } else if (data.password === password) {
     alert("Login successful!");
-    window.location.href = "./MenteePage.html";
+    window.location.href = "./mentee.html";
     // Redirect to a protected page or perform other actions upon successful login
   } else {
     alert("Incorrect password. Please try again.");
@@ -57,8 +57,14 @@ async function createAccount(event) {
 }
 
 function sendInteraction(status) {
-  const userEmail = 'user@example.com'; // Replace this with the actual user email
-  const profileEmail = 'profile@example.com'; // Replace this with the actual profile email
+  // const userEmail = 'user@example.com'; // Replace this with the actual user email
+  // const profileEmail = 'profile@example.com'; // Replace this with the actual profile email
+
+  if (status === 'rejected') {
+      animateCross();
+  } else if (status === 'accepted') {
+      animateCheck();
+  }
 
   const xhr = new XMLHttpRequest();
   xhr.open('POST', 'interactions.php', true);
@@ -72,7 +78,7 @@ function sendInteraction(status) {
       }
   };
 
-  xhr.send(`userEmail=${encodeURIComponent(userEmail)}&profileEmail=${encodeURIComponent(profileEmail)}&status=${status}`);
+  xhr.send(`status=${status}`);
 }
 
 function animateCross() {
