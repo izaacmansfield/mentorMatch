@@ -1,3 +1,6 @@
+let userEmail = "";
+let userPassword = "";
+
 async function checkLogin(event) {
   event.preventDefault();
 
@@ -20,6 +23,8 @@ async function checkLogin(event) {
     alert("Error: " + data.error);
   } else if (data.password === password) {
     alert("Login successful!");
+    userEmail = email;
+    userPassword = password;
     window.location.href = "./mentee.html";
     // Redirect to a protected page or perform other actions upon successful login
   } else {
@@ -70,8 +75,8 @@ async function createAccount(event) {
 }
 
 function sendInteraction(status) {
-  // const userEmail = 'user@example.com'; // Replace this with the actual user email
-  // const profileEmail = 'profile@example.com'; // Replace this with the actual profile email
+  const userEmail = 'user@example.com'; // Replace this with the actual user email
+  const profileEmail = 'profile@example.com'; // Replace this with the actual profile email
 
   if (status === 'rejected') {
       animateCross();
@@ -91,7 +96,7 @@ function sendInteraction(status) {
       }
   };
 
-  xhr.send(`status=${status}`);
+  xhr.send(`userEmail=${encodeURIComponent(userEmail)}&profileEmail=${encodeURIComponent(profileEmail)}&status=${status}`);
 }
 
 function animateCross() {
