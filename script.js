@@ -1,3 +1,6 @@
+let userEmail = "";
+let userPassword = "";
+
 async function checkLogin(event) {
   event.preventDefault();
 
@@ -20,7 +23,9 @@ async function checkLogin(event) {
     alert("Error: " + data.error);
   } else if (data.password === password) {
     alert("Login successful!");
-    window.location.href = "./MenteePage.html";
+    userEmail = email;
+    userPassword = password;
+    window.location.href = "./mentee.html";
     // Redirect to a protected page or perform other actions upon successful login
   } else {
     alert("Incorrect password. Please try again.");
@@ -49,9 +54,58 @@ async function createAccount(event) {
 
   if (data.success) {
     alert("Account created successfully!");
-    window.location.href = "./MenteePage.html";
+    window.location.href = "./login.html";
     // Redirect to a login page or perform other actions upon successful account creation
   } else {
     alert("Error: " + data.error);
   }
+}
+
+function sendInteraction(status) {
+  const userEmail = 'user@example.com'; // Replace this with the actual user email
+  const profileEmail = 'profile@example.com'; // Replace this with the actual profile email
+
+  if (status === 'rejected') {
+      animateCross();
+  } else if (status === 'accepted') {
+      animateCheck();
+  }
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'interactions.php', true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+  xhr.onload = function() {
+      if (this.status === 200) {
+          console.log('Interaction saved:', this.responseText);
+      } else {
+          console.error('An error occurred while saving the interaction');
+      }
+  };
+
+  xhr.send(`userEmail=${encodeURIComponent(userEmail)}&profileEmail=${encodeURIComponent(profileEmail)}&status=${status}`);
+}
+
+function animateCross() {
+  const crossButton = document.querySelector('.cross-button');
+  crossButton.animate([
+      { transform: 'scale(1)', opacity: 1 },
+      { transform: 'scale(1.2)', opacity: 0.5 },
+      { transform: 'scale(1)', opacity: 1 },
+  ], {
+      duration: 300,
+      iterations: 1
+  });
+}
+
+function animateCheck() {
+  const checkButton = document.querySelector('.check-button');
+  checkButton.animate([
+      { transform: 'scale(1)', opacity: 1 },
+      { transform: 'scale(1.2)', opacity: 0.5 },
+      { transform: 'scale(1)', opacity: 1 },
+  ], {
+      duration: 300,
+      iterations: 1
+  });
 }
