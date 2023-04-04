@@ -88,15 +88,15 @@ elseif ($action === 'get_email') {
 }
 
 
-elseif ($action === "logout") {
-    // Destroy all session variables
-    session_unset();
+// if ($action === "logout") {
+//     // Destroy all session variables
+//     session_unset();
 
-    // End the current session
-    session_destroy();
+//     // End the current session
+//     session_destroy();
 
-    echo json_encode(['success' => 'User logged out']);
-}
+//     echo json_encode(['success' => 'User logged out']);
+// }
 
 
 $conn->close();

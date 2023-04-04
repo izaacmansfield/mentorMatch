@@ -174,40 +174,38 @@ async function getEmail() {
     method: "POST",
     body: formData,
   });
-  
-  // const responseText = await response.text();
-  // console.log("Raw response from server:", responseText);
+
   const data = await response.json();
 
-  if (data.email) {
-    console.log("Fetched email:", data.email); // Add this line
-    return data.email;
+  if (data.user_email) { 
+    console.log("Fetched email:", data.user_email); // Add this line
+    return data.user_email;
   } else {
-    console.error("Error getting email:", data.error);
+    console.error("Error getting email:", data);
     return null;
   }
 }
 
-window.addEventListener("beforeunload", (event) => {
-  // Call the logout function
-  logout();
-});
+// window.addEventListener("beforeunload", (event) => {
+//   // Call the logout function
+//   logout();
+// });
 
-async function logout() {
-  const formData = new FormData();
-  formData.append("action", "logout");
+// async function logout() {
+//   const formData = new FormData();
+//   formData.append("action", "logout");
 
-  const response = await fetch("user_actions.php", {
-    method: "POST",
-    body: formData,
-  });
+//   const response = await fetch("user_actions.php", {
+//     method: "POST",
+//     body: formData,
+//   });
 
-  const data = await response.json();
+//   const data = await response.json();
 
-  if (data.success) {
-    // Redirect the user to the login page or show a logout message
-    window.location.href = "login.html";
-  } else {
-    console.error("Error during logout:", data.error);
-  }
-}
+//   if (data.success) {
+//     // Redirect the user to the login page or show a logout message
+//     window.location.href = "login.html";
+//   } else {
+//     console.error("Error during logout:", data.error);
+//   }
+// }
