@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 
 $servername = "107.180.1.16";
@@ -27,6 +28,18 @@ if ($action === 'login') {
 
     if ($row) {
         echo json_encode($row);
+    } else {
+        echo json_encode(['error' => 'User not found']);
+    }
+    if ($row) {
+        if ($row['password'] === $user_password) {
+            // Set session variables for email and password
+            $_SESSION['email'] = $email;
+            $_SESSION['password'] = $user_password;
+            echo json_encode(['success' => 'Login successful']);
+        } else {
+            echo json_encode(['error' => 'Incorrect password']);
+        }
     } else {
         echo json_encode(['error' => 'User not found']);
     }
