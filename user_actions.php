@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 }
 
 if ($action === 'login') {
-    $sql = "SELECT * FROM new_user WHERE email = ?";
+    $sql = "SELECT * FROM new_user2 WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -45,14 +45,15 @@ if ($action === 'login') {
     //     echo json_encode(['error' => 'User not found']);
     // }
 } elseif ($action === 'create_account') {
-    $sql = "INSERT INTO new_user (name, email, password) VALUES (?, ?, ?)";
+    $mentor = $_POST['mentor'];
+    $sql = "INSERT INTO new_user2 (password, email, name, mentor) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $name, $email, $user_password);
+    $stmt->bind_param("sssi", $user_password, $email, $name, $mentor);
 
     if ($stmt->execute()) {
         echo json_encode(['success' => 'User created successfully']);
     } else {
-        echo json_encode(['error' => 'Error: ' . $stmt->error]);
+        echo json_encode(['error' => 'Error: ' . $stmt->error, 'sql_query' => $sql]);
     }
 } else {
     echo json_encode(['error' => 'Invalid action']);

@@ -38,12 +38,23 @@ async function createAccount(event) {
   const name = document.getElementById("name").value;
   const email = document.getElementById("newemail").value;
   const password = document.getElementById("newpassword").value;
+  // const mentor = document.getElementsByName("userselection").value
+
+  const radioButtons = document.querySelectorAll('input[name="userselection"]');
+  let mentor;
+  for (const radioButton of radioButtons) {
+      if (radioButton.checked) {
+          mentor = radioButton.value;
+          break;
+      }
+  }
 
   const formData = new FormData();
   formData.append("action", "create_account");
   formData.append("name", name);
   formData.append("email", email);
   formData.append("password", password);
+  formData.append("mentor", mentor);
 
   const response = await fetch("user_actions.php", {
     method: "POST",
@@ -51,6 +62,8 @@ async function createAccount(event) {
   });
 
   const data = await response.json();
+  // console.log(await response.text()); // Add this line to print the raw response text
+
 
   if (data.success) {
     alert("Account created successfully!");
