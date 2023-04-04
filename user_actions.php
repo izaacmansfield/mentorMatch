@@ -80,8 +80,8 @@ if ($action === 'login') {
 
 
 elseif ($action === 'get_email') {
-    if (isset($_SESSION['email'])) {
-        echo json_encode(['email' => $_SESSION['email']]);
+    if (isset($_SESSION['user_email'])) {
+        echo json_encode(['user_email' => $_SESSION['user_email']]);
     } else {
         echo json_encode(['error' => 'Email not found in session']);
     }
