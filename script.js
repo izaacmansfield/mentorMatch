@@ -19,17 +19,17 @@ async function checkLogin(event) {
 
   const data = await response.json();
 
-  if (data.error) {
-    alert("Error: " + data.error);
-  } else if (data.password === password) {
-    alert("Login successful!");
-    userEmail = email;
-    userPassword = password;
-    window.location.href = "./mentee.html";
-    // Redirect to a protected page or perform other actions upon successful login
-  } else {
-    alert("Incorrect password. Please try again.");
-  }
+  if (data.success) {
+    // Login successful
+    // You can redirect the user to another page or update the UI accordingly
+    window.location.href = "mentee.html"; // Redirect to a dashboard or other page
+} else if (data.error) {
+    // Show an error message
+    alert(data.error);
+} else {
+    // Unexpected response format
+    alert("An unexpected error occurred.");
+}
 }
 
 async function createAccount(event) {
@@ -121,4 +121,69 @@ function animateCheck() {
       duration: 300,
       iterations: 1
   });
+}
+
+// document.getElementById("create-profile-form").addEventListener("submit", createProfile);
+
+async function createProfile(event) {
+  event.preventDefault();
+  try {
+  const email = await getEmail();
+
+  if (email) {
+
+  const major = document.getElementById("major").value;
+  const schoolyear = document.getElementById("school-year").value;
+  const description = document.getElementById("description").value;
+  
+
+  const formData = new FormData();
+  formData.append("action", "create_profile");
+  formData.append("email", email);
+  formData.append("major", major);
+  formData.append("schoolyear", schoolyear);
+  formData.append("description", description);
+
+  const response = await fetch("user_actions.php", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await response.json();
+
+
+  if (data.success) {
+    alert("Profile created successfully!");
+    window.location.href = "./mentee.html";
+    // Redirect to a login page or perform other actions upon successful account creation
+  } else {
+    alert("Error: " + data.error);
+  }
+} else {
+  console.log("Error getting email from session");
+}  } catch (error) {
+  console.error("Error in createProfile function:", error);
+}
+}
+
+async function getEmail() {
+  const formData = new FormData();
+  formData.append("action", "get_email");
+
+  const response = await fetch("user_actions.php", {
+    method: "POST",
+    body: formData,
+  });
+  
+  // const responseText = await response.text();
+  // console.log("Raw response from server:", responseText);
+  const data = await response.json();
+
+  if (data.email) {
+    console.log("Fetched email:", data.email); // Add this line
+    return data.email;
+  } else {
+    console.error("Error getting email:", data.error);
+    return null;
+  }
 }

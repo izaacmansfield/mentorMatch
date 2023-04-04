@@ -1,17 +1,21 @@
 <?php
-// session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+session_start();
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['action'])) {
+$action = $_POST['action'];
 $servername = "107.180.1.16";
 $username = "sprc2023team3";
 $password = "sprc2023team3";
 $dbname = "sprc2023team3";
 
-$action = $_POST['action'];
+
 $name = isset($_POST['name']) ? $_POST['name'] : null;
-$email = $_POST['email'];
-$user_password = $_POST['password'];
+$email = isset($_POST['email']) ? $_POST['email'] : null;
+$user_password = isset($_POST['password']) ? $_POST['password'] : null;
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -25,25 +29,22 @@ if ($action === 'login') {
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
-    if ($row) {
-        echo json_encode($row);
+  
+    if ($row = $result->fetch_assoc()) {
+        error_log("Entered password: " . $user_password);
+        error_log("Stored password: " . $row['password']);
+        if ($user_password === $row['password']) {
+            // Store the user's email in the session variable
+            $_SESSION['user_email'] = $email;
+            echo json_encode(['success' => 'Login successful']);
+        } else {
+            echo json_encode(['error' => 'Incorrect password']);
+        }
     } else {
         echo json_encode(['error' => 'User not found']);
     }
-    // if ($row) {
-    //     if ($row['password'] === $user_password) {
-    //         // Set session variables for email and password
-    //         $_SESSION['email'] = $email;
-    //         $_SESSION['password'] = $user_password;
-    //         echo json_encode(['success' => 'Login successful']);
-    //     } else {
-    //         echo json_encode(['error' => 'Incorrect password']);
-    //     }
-    // } else {
-    //     echo json_encode(['error' => 'User not found']);
-    // }
+
+ 
 } elseif ($action === 'create_account') {
     $mentor = $_POST['mentor'];
     $sql = "INSERT INTO new_user2 (password, email, name, mentor) VALUES (?, ?, ?, ?)";
@@ -55,8 +56,33 @@ if ($action === 'login') {
     } else {
         echo json_encode(['error' => 'Error: ' . $stmt->error, 'sql_query' => $sql]);
     }
-} else {
-    echo json_encode(['error' => 'Invalid action']);
+} 
+
+
+ elseif ($action === 'create_profile') {
+    $email = $_POST['email'];
+    $major = $_POST['major'];
+    $school_year = $_POST['schoolyear'];
+    $description = $_POST['description'];
+    $sql = "INSERT INTO mentee_information2 (Email, major, School_year, description) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $email, $major, $school_year, $description);
+
+    if ($stmt->execute()) {
+        echo json_encode(['success' => 'Profile created successfully']);
+    } else {
+        echo json_encode(['error' => 'Error: ' . $stmt->error, 'sql_query' => $sql]);
+    }
+} 
+
+
+
+elseif ($action === 'get_email') {
+    if (isset($_SESSION['email'])) {
+        echo json_encode(['email' => $_SESSION['email']]);
+    } else {
+        echo json_encode(['error' => 'Email not found in session']);
+    }
 }
 
 $conn->close();
