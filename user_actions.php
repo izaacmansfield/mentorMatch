@@ -32,18 +32,18 @@ if ($action === 'login') {
     } else {
         echo json_encode(['error' => 'User not found']);
     }
-    if ($row) {
-        if ($row['password'] === $user_password) {
-            // Set session variables for email and password
-            $_SESSION['email'] = $email;
-            $_SESSION['password'] = $user_password;
-            echo json_encode(['success' => 'Login successful']);
-        } else {
-            echo json_encode(['error' => 'Incorrect password']);
-        }
-    } else {
-        echo json_encode(['error' => 'User not found']);
-    }
+    // if ($row) {
+    //     if ($row['password'] === $user_password) {
+    //         // Set session variables for email and password
+    //         $_SESSION['email'] = $email;
+    //         $_SESSION['password'] = $user_password;
+    //         echo json_encode(['success' => 'Login successful']);
+    //     } else {
+    //         echo json_encode(['error' => 'Incorrect password']);
+    //     }
+    // } else {
+    //     echo json_encode(['error' => 'User not found']);
+    // }
 } elseif ($action === 'create_account') {
     $sql = "INSERT INTO new_user (name, email, password) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
