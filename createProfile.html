@@ -15,16 +15,19 @@
     <h1>Create Profile</h1>
 
     <form id="profile-form">
-        <label for="first-name">First Name:</label>
-        <input type="text" id="first-name" name="first-name"><br>
+        <label for="major">Major:</label>
+        <input type="text" id="major"><br>
       
-        <label for="last-name">Last Name:</label>
-        <input type="text" id="last-name" name="last-name"><br>
-      
-        <label for="university">University:</label>
-        <input type="text" id="university" name="university"><br>
-      
-        <label for="description">Accomplishments:</label>
+        <label for="school-year">School Year:</label>
+
+        <select name="school-year" id="school-year">
+            <option value="Freshman">Freshman</option>
+            <option value="Sophomore">Sophomore</option>
+            <option value="Junior">Junior</option>
+            <option value="Senior">Senior</option>
+        </select> <br>
+        
+        <label for="description">Profile Description:</label>
         <textarea id="description" name="description"></textarea><br>
       
         <button type="submit">Submit</button><br>
