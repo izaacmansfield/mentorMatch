@@ -2,6 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+// Set session expiration time to 30 minutes (1800 seconds)
+ini_set('session.gc_maxlifetime', 1800);
 session_start();
 header('Content-Type: application/json');
 
@@ -84,6 +86,18 @@ elseif ($action === 'get_email') {
         echo json_encode(['error' => 'Email not found in session']);
     }
 }
+
+
+elseif ($action === "logout") {
+    // Destroy all session variables
+    session_unset();
+
+    // End the current session
+    session_destroy();
+
+    echo json_encode(['success' => 'User logged out']);
+}
+
 
 $conn->close();
 }

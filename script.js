@@ -187,3 +187,27 @@ async function getEmail() {
     return null;
   }
 }
+
+window.addEventListener("beforeunload", (event) => {
+  // Call the logout function
+  logout();
+});
+
+async function logout() {
+  const formData = new FormData();
+  formData.append("action", "logout");
+
+  const response = await fetch("user_actions.php", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await response.json();
+
+  if (data.success) {
+    // Redirect the user to the login page or show a logout message
+    window.location.href = "login.html";
+  } else {
+    console.error("Error during logout:", data.error);
+  }
+}
