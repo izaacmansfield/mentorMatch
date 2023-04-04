@@ -186,26 +186,16 @@ async function getEmail() {
   }
 }
 
-// window.addEventListener("beforeunload", (event) => {
+// window.addEventListener("unload", (event) => {
 //   // Call the logout function
 //   logout();
 // });
 
-// async function logout() {
+// function logout() {
 //   const formData = new FormData();
 //   formData.append("action", "logout");
 
-//   const response = await fetch("user_actions.php", {
-//     method: "POST",
-//     body: formData,
-//   });
-
-//   const data = await response.json();
-
-//   if (data.success) {
-//     // Redirect the user to the login page or show a logout message
-//     window.location.href = "login.html";
-//   } else {
-//     console.error("Error during logout:", data.error);
-//   }
+//   // Use navigator.sendBeacon to send the request
+//   navigator.sendBeacon("user_actions.php", formData);
 // }
+

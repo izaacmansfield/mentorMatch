@@ -88,15 +88,13 @@ elseif ($action === 'get_email') {
 }
 
 
-// if ($action === "logout") {
-//     // Destroy all session variables
+// elseif ($action === 'logout') {
 //     session_unset();
-
-//     // End the current session
 //     session_destroy();
-
-//     echo json_encode(['success' => 'User logged out']);
+//     setcookie(session_name(), "", time() - 3600, "/");
+//     echo json_encode(['success' => 'Logged out successfully']);
 // }
+
 
 
 $conn->close();
