@@ -19,6 +19,7 @@ $name = isset($_POST['name']) ? $_POST['name'] : null;
 $email = isset($_POST['email']) ? $_POST['email'] : null;
 $user_password = isset($_POST['password']) ? $_POST['password'] : null;
 
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
@@ -38,6 +39,7 @@ if ($action === 'login') {
         if ($user_password === $row['password']) {
             // Store the user's email in the session variable
             $_SESSION['user_email'] = $email;
+            $_SESSION['mentor_status']= $row['mentor'];
             echo json_encode(['success' => 'Login successful']);
         } else {
             echo json_encode(['error' => 'Incorrect password']);
@@ -66,7 +68,13 @@ if ($action === 'login') {
     $major = $_POST['major'];
     $school_year = $_POST['schoolyear'];
     $description = $_POST['description'];
-    $sql = "INSERT INTO mentee_information2 (Email, major, School_year, description) VALUES (?, ?, ?, ?)";
+    if($_SESSION['mentor_status']===1){
+        $sql = "INSERT INTO mentee_inf (email, major, school_year, short_description) VALUES (?, ?, ?, ?)";
+    }
+    else{
+        $sql="INSERT INTO mentor_information2 (email, major, school_year, description) VALUES (?,?,?,?)";
+    }
+    
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssss", $email, $major, $school_year, $description);
 
