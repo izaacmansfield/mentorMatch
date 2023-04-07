@@ -1,5 +1,7 @@
 let userEmail = "";
 let userPassword = "";
+var mentor_status="<?php echo $_SESSION['mentor_status'] ?>";
+
 
 async function checkLogin(event) {
   event.preventDefault();
@@ -22,7 +24,13 @@ async function checkLogin(event) {
   if (data.success) {
     // Login successful
     // You can redirect the user to another page or update the UI accordingly
-    window.location.href = "mentee.html"; // Redirect to a dashboard or other page
+    if(mentor_status===1){
+      window.location.href = "mentee.html";
+    }
+    else{
+      window.location.href="mentor.html";
+    }
+     // Redirect to a dashboard or other page
 } else if (data.error) {
     // Show an error message
     alert(data.error);
@@ -154,7 +162,13 @@ async function createProfile(event) {
 
   if (data.success) {
     alert("Profile created successfully!");
-    window.location.href = "./mentee.html";
+    if(mentor_status===1){
+      window.location.href = "./mentee.html";
+    }
+    else{
+      window.location.href = "./mentor.html"
+    }
+    
     // Redirect to a login page or perform other actions upon successful account creation
   } else {
     alert("Error: " + data.error);
