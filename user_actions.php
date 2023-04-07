@@ -69,7 +69,7 @@ if ($action === 'login') {
     $school_year = $_POST['schoolyear'];
     $description = $_POST['description'];
     if($_SESSION['mentor_status']===1){
-        $sql = "INSERT INTO mentee_inf (email, major, school_year, short_description) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO mentee_inf (mentee_email, major, school_year, short_description) VALUES (?, ?, ?, ?)";
     }
     else{
         $sql="INSERT INTO mentor_information2 (email, major, school_year, description) VALUES (?,?,?,?)";
