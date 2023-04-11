@@ -6,13 +6,16 @@ error_reporting(E_ALL);
 ini_set('session.gc_maxlifetime', 1800);
 session_start();
 header('Content-Type: application/json');
-
+// include 'interactions.php';
 if (isset($_POST['action'])) {
 $action = $_POST['action'];
 $servername = "107.180.1.16";
 $username = "sprc2023team3";
 $password = "sprc2023team3";
 $dbname = "sprc2023team3";
+
+
+
 
 
 $name = isset($_POST['name']) ? $_POST['name'] : null;
@@ -39,8 +42,16 @@ if ($action === 'login') {
         if ($user_password === $row['password']) {
             // Store the user's email in the session variable
             $_SESSION['user_email'] = $email;
-            $_SESSION['mentor_status']= $row['mentor'];
-            echo json_encode(['success' => 'Login successful']);
+            $mentor_status= $row['mentor'];
+            $_SESSION['mentor_status']= $mentor_status;
+            $data= array(
+                'success' => 'Login succesful',
+                'mentor' => $_SESSION['mentor_status']
+            );
+            echo json_encode($data);
+            // if($_SESSION['mentor_status']===1){
+            //     tinder_match();
+            // }
         } else {
             echo json_encode(['error' => 'Incorrect password']);
         }
@@ -68,18 +79,23 @@ if ($action === 'login') {
     $major = $_POST['major'];
     $school_year = $_POST['schoolyear'];
     $description = $_POST['description'];
+    $linkedin = $_POST['linkedin'];
     if($_SESSION['mentor_status']===1){
-        $sql = "INSERT INTO mentee_inf (mentee_email, major, school_year, short_description) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO mentee_inf (mentee_email, major, school_year, short_description,linkedin) VALUES (?, ?, ?, ?,?)";
     }
     else{
-        $sql="INSERT INTO mentor_information2 (email, major, school_year, description) VALUES (?,?,?,?)";
+        $sql="INSERT INTO mentor_information2 (email, major, school_year, description, linkedin) VALUES (?,?,?,?,?)";
     }
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $email, $major, $school_year, $description);
+    $stmt->bind_param("sssss", $email, $major, $school_year, $description, $linkedin);
 
     if ($stmt->execute()) {
-        echo json_encode(['success' => 'Profile created successfully']);
+        $data2=array(
+            'success' => 'Profile created successfully',
+            'mentor' => $_SESSION['mentor_status']
+        );
+        echo json_encode($data2);
     } else {
         echo json_encode(['error' => 'Error: ' . $stmt->error, 'sql_query' => $sql]);
     }
@@ -93,6 +109,41 @@ elseif ($action === 'get_email') {
     } else {
         echo json_encode(['error' => 'Email not found in session']);
     }
+}
+
+elseif ($action ==='tinder_match'){
+    $sql ="SELECT * from mentor_information2 m join new_user2 n where m.email=n.email";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row_num=$_POST['row_num'];
+    for($i=0;$i< $row_num;$i++){
+        $row1= $result->fetch_assoc();
+    }
+    $name= $row1['name'];
+    $mentor_email= $row1['email'];
+    $major= $row1['major'];
+    $school_year= $row1['school_year'];
+    $description = $row1['description'];
+    $linkedin = $row1['linkedin'];
+    $_SESSION['mentor_email']=$mentor_email;
+    $row_data= array(
+        'name'=> $name,
+        'email'=> $mentor_email,
+        'major'=> $major,
+        'school_year'=> $school_year,
+        'description'=> $description,
+        'linkedin'=> $linkedin
+    );
+    echo json_encode($row_data);
+}
+elseif($action==="send_interaction"){
+    $status=$_POST['status'];
+    $sql ="INSERT INTO interactions (user_email, profile_email, status) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $_SESSION['user_email'], $_SESSION['mentor_email'], $status);
+    $stmt->execute();
+
 }
 
 
