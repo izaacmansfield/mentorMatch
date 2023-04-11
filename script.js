@@ -258,3 +258,15 @@ async function send_interaction(status){
 //   navigator.sendBeacon("user_actions.php", formData);
 // }
 
+async function populateTable(){
+  const formdata = new FormData;
+  formdata.append('action', 'populateTable');
+  const response = await fetch("user_actions.php",{
+    method: "POST",
+    body:formdata,
+  });
+
+
+
+
+}

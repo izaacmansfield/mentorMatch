@@ -154,7 +154,35 @@ elseif($action==="send_interaction"){
 //     echo json_encode(['success' => 'Logged out successfully']);
 // }
 
+elseif($action==="populateTable"){
 
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die ("Connection failed: " . $conn->connect_error);
+    }
+
+    // $sql= "SELECT * FROM mentor_information WHERE status='accepted'";
+    $result = $conn->query($sql);
+
+    if (!$result) {
+        die("Invalid query: " . $conn->error);
+    }
+    // read each row's data
+    while($row - $result->fetch_assoc()){
+    echo "<tr>
+    <td>" . $row["name"] . "</td>
+    <td>" . $row["school_year"] . "</td>
+    <td>" . $row["major"] . "</td>
+    <td>" . $row["linkedin"] . "</td>
+    <td>" . $row["description"] . "</td>
+    <td>
+        <a class=btn btn-primary btn-sm' href='accept'>Accept</a>
+        <a class=btn btn-danger btn-sm' href='delete'>Delete</a>
+    </td>
+    </tr>";
+    }
+    }
 
 $conn->close();
 }
