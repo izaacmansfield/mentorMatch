@@ -7,7 +7,7 @@
     <script src="script.js" defer></script>
     <title>Tinder-Style Webpage</title>
 </head>
-<body>
+<body onload="tinder_match()">
     <header>
         <nav class="menu-bar">Menu Bar</nav>
         <div class="menu">
@@ -20,11 +20,16 @@
 
         <div class="profile-card">
             <img src="profile-picture.jpg" alt="Profile Picture" class="profile-picture">
-            <h2 class="profile-name">Name</h2>
-            <p class="profile-statement">Short statement goes here</p>
+            <h2 id="Name" class="profile-name">Name</h2>
+            <p id="email">Email</p><br>
+            <p id="major">Major</p><br>
+            <p id="school_year">School Year</p><br>
+            <p id="description" class="profile-statement">Short statement goes here</p><br>
+            <p id="linkedin"></p>
+
             <div class="action-buttons">
-                <button class="cross-button" onclick="sendInteraction('rejected')">❌</button>
-                <button class="check-button" onclick="sendInteraction('accepted')">✅</button>
+                <button class="cross-button" onclick="send_interaction('rejected')">❌</button>
+                <button class="check-button" onclick="send_interaction('accepted')">✅</button>
             </div>
         </div>
     </main>
