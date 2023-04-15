@@ -139,7 +139,7 @@ elseif ($action ==='tinder_match'){
 }
 elseif($action==="send_interaction"){
     $status=$_POST['status'];
-    $sql ="INSERT INTO interactions (user_email, profile_email, status) VALUES (?, ?, ?)";
+    $sql ="INSERT INTO interactions2 (user_email, profile_email, status) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $_SESSION['user_email'], $_SESSION['mentor_email'], $status);
     $stmt->execute();
@@ -162,8 +162,10 @@ elseif($action==="populateTable"){
         die ("Connection failed: " . $conn->connect_error);
     }
 
-    // $sql= "SELECT * FROM mentor_information WHERE status='accepted'";
-    $result = $conn->query($sql);
+     $sql= "SELECT * FROM interactions2 WHERE status='accepted' and user_email = ?";
+     $stmt= $conn->prepare($sql);
+     $stmt->bind_param("s",$_SESSION['user_email']);
+     $result = $conn->query($sql);
 
     if (!$result) {
         die("Invalid query: " . $conn->error);
