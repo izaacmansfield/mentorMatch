@@ -246,18 +246,14 @@ async function send_interaction(status){
 
 }
 
-// window.addEventListener("unload", (event) => {
-//   // Call the logout function
-//   logout();
-// });
 
-// function logout() {
-//   const formData = new FormData();
-//   formData.append("action", "logout");
+function logout() {
+  const formData = new FormData();
+  formData.append("action", "logout");
 
-//   // Use navigator.sendBeacon to send the request
-//   navigator.sendBeacon("user_actions.php", formData);
-// }
+  // Use navigator.sendBeacon to send the request
+  navigator.sendBeacon("user_actions.php", formData);
+}
 
 async function tinder_match_mentor(){
   const formdata = new FormData;
@@ -325,6 +321,7 @@ async function populateMatch() {
       <p>School Year: ${match.school_year}</p>
       <p>Description: ${match.description}</p>
       <p>LinkedIn: ${match.linkedin}</p>
+      <br><br>
     `;
 
     container.appendChild(matchDiv);

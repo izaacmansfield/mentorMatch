@@ -4,23 +4,26 @@
         <title>Mentor Match</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="menteeStyles.css">
+        <link rel="stylesheet" href="styles.css">
         <link rel="icon" href="mentormatchicon.png">
         <script src="script.js"></script>
     </head>
 
     <body onload="tinder_match_mentor()">
         <header>
-            <nav class="menu-bar">Menu Bar</nav>
-            <div class="menu">
-                <a href="createProfile.html">Edit Profile</a>
-                <a href="tokenStore.html">Store</a>
-            </div>
+            <nav class="menu-bar">
+            <ul class="menu">
+                <li><a href="createProfile.html">Edit Profile</a></li>
+                <li><a href="mentorMatches.html">Matches</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="login.html" onclick="logout()">Logout</a></li>
+            </ul>
+           </nav> 
         </header>
         <main>
             <h1>Mentor Page</h1>
-            <div class="profile-card1">
-                <img src="profile-picture.jpg" alt="Profile Picture" class="profile-picture">
+            <div class="profile-card">
+                <!-- <img src="profile-picture.jpg" alt="Profile Picture" class="profile-picture"> -->
                 <h2 id="Name1" class="profile-name">Name</h2>
                 <p id="email1">Email</p><br>
                 <p id="major1">Major</p><br>
@@ -28,7 +31,7 @@
                 <p id="description1" class="profile-statement">Short statement goes here</p><br>
                 <p id="linkedin1"></p>
     
-                <div class="action-buttons1">
+                <div class="action-buttons">
                     <button class="cross-button" onclick="send_match('rejected')">❌</button>
                     <button class="check-button" onclick="send_match('accepted')">✅</button>
                 </div>
