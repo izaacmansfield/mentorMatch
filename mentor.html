@@ -4,11 +4,12 @@
         <title>Mentor Match</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="menteeStyles.css">
-<link rel="icon" href="mentormatchicon.png">
+        <link rel="stylesheet" href="menteeStyles.css">
+        <link rel="icon" href="mentormatchicon.png">
+        <script src="script.js"></script>
     </head>
 
-    <body>
+    <body onload="tinder_match_mentor()">
         <header>
             <nav class="menu-bar">Menu Bar</nav>
             <div class="menu">
@@ -18,8 +19,22 @@
         </header>
         <main>
             <h1>Mentor Page</h1>
+            <div class="profile-card1">
+                <img src="profile-picture.jpg" alt="Profile Picture" class="profile-picture">
+                <h2 id="Name1" class="profile-name">Name</h2>
+                <p id="email1">Email</p><br>
+                <p id="major1">Major</p><br>
+                <p id="school_year1">School Year</p><br>
+                <p id="description1" class="profile-statement">Short statement goes here</p><br>
+                <p id="linkedin1"></p>
+    
+                <div class="action-buttons1">
+                    <button class="cross-button" onclick="send_match('rejected')">❌</button>
+                    <button class="check-button" onclick="send_match('accepted')">✅</button>
+                </div>
+            </div>
 
-            <div class="pendingMenteesTable">
+            <!-- <div class="pendingMenteesTable">
                 <table>
                     <thead>
                     <tr>
@@ -31,11 +46,11 @@
                     </tr>
                 </thead>
                 <tbody onload="populateTable", id="menteeTable">
-                    <!-- table gets populated in user.actions.php -->
+                     //table gets populated in user.actions.php 
                     
                 </tbody>
                 </table>
-            </div>
+            </div> -->
         </main>
     </body>
 
