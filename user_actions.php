@@ -154,9 +154,79 @@ elseif($action==="send_interaction"){
 //     echo json_encode(['success' => 'Logged out successfully']);
 // }
 
-elseif($action==="populateTable"){
+// elseif($action==="populateTable"){
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+//     $conn = new mysqli($servername, $username, $password, $dbname);
+
+//     if ($conn->connect_error) {
+//         die ("Connection failed: " . $conn->connect_error);
+//     }
+
+//      $sql= "SELECT * FROM interactions2 WHERE status='accepted' and user_email = ?";
+//      $stmt= $conn->prepare($sql);
+//      $stmt->bind_param("s",$_SESSION['user_email']);
+//      $result = $conn->query($sql);
+
+//     if (!$result) {
+//         die("Invalid query: " . $conn->error);
+//     }
+//     // read each row's data
+//     while($row - $result->fetch_assoc()){
+//     echo "<tr>
+//     <td>" . $row["name"] . "</td>
+//     <td>" . $row["school_year"] . "</td>
+//     <td>" . $row["major"] . "</td>
+//     <td>" . $row["linkedin"] . "</td>
+//     <td>" . $row["description"] . "</td>
+//     <td>
+//         <a class=btn btn-primary btn-sm' href='accept'>Accept</a>
+//         <a class=btn btn-danger btn-sm' href='delete'>Delete</a>
+//     </td>
+//     </tr>";
+//     }
+//     }
+
+elseif ($action ==='tinder_match_mentor'){
+    $sql ="SELECT * from interactions2 i 
+    join mentee_inf m on i.user_email = m.mentee_email
+    join new_user2 n on m.mentee_email=n.email
+    where profile_email= ?
+    and i.status='accepted';";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s",$_SESSION['user_email']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row_num2=$_POST['row_num2'];
+    for($i=0;$i< $row_num2;$i++){
+        $row2= $result->fetch_assoc();
+    }
+    $name= $row2['name'];
+    $mentee_email= $row2['user_email'];
+    $major= $row2['major'];
+    $school_year= $row2['school_year'];
+    $description = $row2['short_description'];
+    $linkedin = $row2['linkedin'];
+    $_SESSION['mentee_email']=$mentee_email;
+    $row_data= array(
+        'name'=> $name,
+        'email'=> $mentee_email,
+        'major'=> $major,
+        'school_year'=> $school_year,
+        'description'=> $description,
+        'linkedin'=> $linkedin
+    );
+    echo json_encode($row_data);
+}
+elseif($action==="send_match"){
+    $status=$_POST['status'];
+    $sql ="INSERT INTO Matches (user_email, mentee_email, match_status) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $_SESSION['user_email'], $_SESSION['mentee_email'], $status);
+    $stmt->execute();
+
+}
+
+
 
     if ($conn->connect_error) {
         die ("Connection failed: " . $conn->connect_error);
@@ -167,24 +237,6 @@ elseif($action==="populateTable"){
      $stmt->bind_param("s",$_SESSION['user_email']);
      $result = $conn->query($sql);
 
-    if (!$result) {
-        die("Invalid query: " . $conn->error);
-    }
-    // read each row's data
-    while($row - $result->fetch_assoc()){
-    echo "<tr>
-    <td>" . $row["name"] . "</td>
-    <td>" . $row["school_year"] . "</td>
-    <td>" . $row["major"] . "</td>
-    <td>" . $row["linkedin"] . "</td>
-    <td>" . $row["description"] . "</td>
-    <td>
-        <a class=btn btn-primary btn-sm' href='accept'>Accept</a>
-        <a class=btn btn-danger btn-sm' href='delete'>Delete</a>
-    </td>
-    </tr>";
-    }
-    }
 
     elseif($action==="populateMatch"){
 

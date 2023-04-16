@@ -1,6 +1,7 @@
 let userEmail = "";
 let userPassword = "";
 var row_num=1;
+var row_num2=1;
 
 
 
@@ -258,15 +259,43 @@ async function send_interaction(status){
 //   navigator.sendBeacon("user_actions.php", formData);
 // }
 
-async function populateTable(){
+async function tinder_match_mentor(){
   const formdata = new FormData;
-  formdata.append('action', 'populateTable');
+  formdata.append('action', 'tinder_match_mentor');
+  formdata.append('row_num2',row_num2)
   const response = await fetch("user_actions.php",{
     method: "POST",
     body:formdata,
   });
+
+  const data4 = await response.json();
+
+  document.getElementById('Name1').innerHTML= data4.name;
+  document.getElementById('email1').innerHTML= data4.email;
+  document.getElementById('major1').innerHTML= data4.major;
+  document.getElementById('school_year1').innerHTML= data4.school_year;
+  document.getElementById('description1').innerHTML= data4.description;
+  document.getElementById('linkedin1').innerHTML= data4.linkedin;
+
 }
 
+async function send_match(status){
+  const formdata = new FormData();
+  formdata.append("action","send_match");
+  formdata.append("status",status);
+  if (status === 'rejected') {
+          animateCross();
+   } 
+   else if (status === 'accepted') {
+          animateCheck();
+      }
+  const response = await fetch("user_actions.php",{
+    method: "POST",
+    body:formdata,
+  });
+  row_num2++;
+  tinder_match_mentor();
+}
 async function populateMatch() {
   const formData = new FormData();
   formData.append("action", "populateMatch");
@@ -279,6 +308,7 @@ async function populateMatch() {
 
   // Get the container where you want to display the data
   const container = document.getElementById("matchesContainer");
+
 
   // Clear the container before adding new data
   container.innerHTML = "";
