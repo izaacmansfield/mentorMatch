@@ -147,12 +147,12 @@ elseif($action==="send_interaction"){
 }
 
 
-// elseif ($action === 'logout') {
-//     session_unset();
-//     session_destroy();
-//     setcookie(session_name(), "", time() - 3600, "/");
-//     echo json_encode(['success' => 'Logged out successfully']);
-// }
+elseif ($action === 'logout') {
+    session_unset();
+    session_destroy();
+    setcookie(session_name(), "", time() - 3600, "/");
+    echo json_encode(['success' => 'Logged out successfully']);
+}
 
 // elseif($action==="populateTable"){
 
@@ -234,11 +234,22 @@ elseif($action==="send_match"){
         if ($conn->connect_error) {
             die ("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT * 
-        FROM mentor_information2 m 
-        JOIN new_user2 n ON m.email = n.email 
-        JOIN Matches mt ON mt.user_email = m.email
-        WHERE mt.mentee_email = ?";
+
+        if($_SESSION['mentor_status']===1){
+            $sql = "SELECT * 
+            FROM mentor_information2 m 
+            JOIN new_user2 n ON m.email = n.email 
+            JOIN Matches mt ON mt.user_email = m.email
+            WHERE mt.mentee_email = ?";
+        }
+
+        else{
+            $sql = "SELECT * 
+            FROM mentee_inf m 
+            JOIN new_user2 n ON m.mentee_email = n.email 
+            JOIN Matches mt ON mt.mentee_email = m.mentee_email
+            WHERE mt.user_email = ?";
+        }
 
          $stmt= $conn->prepare($sql);
          $stmt->bind_param("s",$_SESSION['user_email']);
@@ -252,6 +263,7 @@ elseif($action==="send_match"){
        $rows_data = array();
 
        // Fetch each row's data
+       if($_SESSION['mentor_status']===1){
        while($row = $result->fetch_assoc()) {
            $name= $row['name'];
            $mentor_email= $row['email'];
@@ -271,6 +283,27 @@ elseif($action==="send_match"){
            // Add the row_data to the rows_data array
            $rows_data[] = $row_data;
        }
+    }
+    else{
+        while($row = $result->fetch_assoc()) {
+            $name= $row['name'];
+            $mentee_email= $row['mentee_email'];
+            $major= $row['major'];
+            $school_year= $row['school_year'];
+            $description = $row['short_description'];
+            $linkedin = $row['linkedin'];
+            // $_SESSION['mentor_email']=$mentor_email;
+            $row_data= array(
+                'name'=> $name,
+                'email'=> $mentee_email,
+                'major'=> $major,
+                'school_year'=> $school_year,
+                'description'=> $description,
+                'linkedin'=> $linkedin
+            );
+            // Add the row_data to the rows_data array
+            $rows_data[] = $row_data;
+    }}
    
        // Output the JSON encoded data
        echo json_encode($rows_data);
