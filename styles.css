@@ -6,6 +6,9 @@ body{
 	color: #ffeba7;
 	background-color: #1f2029;
 }
+h1{
+  text-align: center;
+}
 a:hover {
 	text-decoration: none;
 }
@@ -181,7 +184,7 @@ display: none;
 }
 
 .menu-bar {
-  background-color: bisque;
+  background-color: darkolivegreen;
   padding: 1rem;
   text-align: center;
   font-weight: bold;
@@ -223,4 +226,32 @@ button {
 
 button:focus {
   outline: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* background-color: ; */
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: #ffeba7;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  margin-right: 50px;
+  font-size: 18px;
+  
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
 }
