@@ -294,7 +294,6 @@ async function populateMatch() {
       <p>School Year: ${match.school_year}</p>
       <p>Description: ${match.description}</p>
       <p>LinkedIn: ${match.linkedin}</p>
-      <hr>
     `;
 
     container.appendChild(matchDiv);
