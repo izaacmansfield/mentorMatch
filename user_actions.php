@@ -161,7 +161,7 @@ elseif($action==="populateTable"){
     if ($conn->connect_error) {
         die ("Connection failed: " . $conn->connect_error);
     }
-
+    
      $sql= "SELECT * FROM interactions2 WHERE status='accepted' and user_email = ?";
      $stmt= $conn->prepare($sql);
      $stmt->bind_param("s",$_SESSION['user_email']);
@@ -186,6 +186,54 @@ elseif($action==="populateTable"){
     }
     }
 
+    elseif($action==="populateMatch"){
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+    
+        if ($conn->connect_error) {
+            die ("Connection failed: " . $conn->connect_error);
+        }
+        $sql = "SELECT * 
+        FROM mentor_information2 m 
+        JOIN new_user2 n ON m.email = n.email 
+        JOIN Matches mt ON mt.user_email = m.email
+        WHERE mt.mentee_email = ?";
+
+         $stmt= $conn->prepare($sql);
+         $stmt->bind_param("s",$_SESSION['user_email']);
+         $stmt->execute(); // Execute the prepared statement
+         $result = $stmt->get_result();
+    
+        if (!$result) {
+            die("Invalid query: " . $conn->error);
+        }
+       // Declare an array to store the fetched rows
+       $rows_data = array();
+
+       // Fetch each row's data
+       while($row = $result->fetch_assoc()) {
+           $name= $row['name'];
+           $mentor_email= $row['email'];
+           $major= $row['major'];
+           $school_year= $row['school_year'];
+           $description = $row['description'];
+           $linkedin = $row['linkedin'];
+           $_SESSION['mentor_email']=$mentor_email;
+           $row_data= array(
+               'name'=> $name,
+               'email'=> $mentor_email,
+               'major'=> $major,
+               'school_year'=> $school_year,
+               'description'=> $description,
+               'linkedin'=> $linkedin
+           );
+           // Add the row_data to the rows_data array
+           $rows_data[] = $row_data;
+       }
+   
+       // Output the JSON encoded data
+       echo json_encode($rows_data);
+    }
 $conn->close();
 }
 ?>

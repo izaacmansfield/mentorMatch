@@ -265,8 +265,38 @@ async function populateTable(){
     method: "POST",
     body:formdata,
   });
+}
 
+async function populateMatch() {
+  const formData = new FormData();
+  formData.append("action", "populateMatch");
+  const response = await fetch("user_actions.php", {
+    method: "POST",
+    body: formData,
+  });
 
+  const data4 = await response.json();
 
+  // Get the container where you want to display the data
+  const container = document.getElementById("matchesContainer");
 
+  // Clear the container before adding new data
+  container.innerHTML = "";
+
+  // Loop through the data and create elements for each row
+  data4.forEach((match) => {
+    const matchDiv = document.createElement("div");
+
+    matchDiv.innerHTML = `
+      <p>Name: ${match.name}</p>
+      <p>Email: ${match.email}</p>
+      <p>Major: ${match.major}</p>
+      <p>School Year: ${match.school_year}</p>
+      <p>Description: ${match.description}</p>
+      <p>LinkedIn: ${match.linkedin}</p>
+      <hr>
+    `;
+
+    container.appendChild(matchDiv);
+  });
 }
