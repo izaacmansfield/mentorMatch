@@ -227,17 +227,6 @@ elseif($action==="send_match"){
 }
 
 
-
-    if ($conn->connect_error) {
-        die ("Connection failed: " . $conn->connect_error);
-    }
-    
-     $sql= "SELECT * FROM interactions2 WHERE status='accepted' and user_email = ?";
-     $stmt= $conn->prepare($sql);
-     $stmt->bind_param("s",$_SESSION['user_email']);
-     $result = $conn->query($sql);
-
-
     elseif($action==="populateMatch"){
 
         $conn = new mysqli($servername, $username, $password, $dbname);
