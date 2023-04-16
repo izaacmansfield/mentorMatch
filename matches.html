@@ -4,13 +4,35 @@
         <title>Mentor Match</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="menteeStyles.css">
-<link rel="icon" href="mentormatchicon.png">
+        <link rel="stylesheet" href="menteeStyles.css">
+        <link rel="icon" href="mentormatchicon.png">
+        <script src="script.js" defer></script>
     </head>
-
-    <body>
-        <h1>Here are all the mentors that you matched with!</h1>
-
+    <body onload="populateTable()">
+        <h1>Here is the mentor that you matched with!</h1>
+        <h2 id="Name" class="profile-name">Name</h2>
+        <p id="email"></p><br>
+        <p id="major"></p><br>
+        <p id="school_year"></p><br>
+        <p id="description" class="profile-statement"></p><br>
+        <p id="linkedin"></p>
+        <!-- Google Calendar Appointment Scheduling begin -->
+<link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+<script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+<script>
+(function() {
+  var target = document.currentScript;
+  window.addEventListener('load', function() {
+    calendar.schedulingButton.load({
+      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3Y2jzLXrNSUmEKQA__lkE78uxX2U4UZdA0ASkRufBE0xXh73kbA128VvJsa6L4toGEvR9WGO_A?gv=true',
+      color: '#ffeba7',
+      label: 'Book a Session!',
+      target,
+    });
+  });
+})();
+</script>
+<!-- end Google Calendar Appointment Scheduling -->
     </body>
 
 </html>
