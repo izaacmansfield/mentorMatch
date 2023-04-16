@@ -255,3 +255,24 @@ li a {
 li a:hover {
   background-color: #111;
 }
+
+.center {
+  /* display: block; */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 60px;
+  text-align: center;
+}
+
+.desc {
+  border: solid 1px darkgreen;
+  inline-size: 800px;
+  overflow-wrap: break-word;
+  padding: 25px;
+  margin-left: 80px;
+}
+
+.right {
+  float: right;
+  margin-right: 200px;
+}
