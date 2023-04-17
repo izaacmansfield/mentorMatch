@@ -20,7 +20,6 @@ body {
     color: inherit;
   }
   
-  /* Header Styles */
   
   header {
     background-color: #8C1D40;
@@ -39,7 +38,6 @@ body {
     font-size: 1.2rem;
   }
   
-  /* Main Styles */
   
   main {
     max-width: 1200px;
@@ -89,7 +87,6 @@ body {
     background-color: #666;
   }
   
-  /* Footer Styles */
   
   footer {
     background-color: #333;
