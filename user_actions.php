@@ -324,13 +324,18 @@ elseif($action==="display_tokens"){
     $stmt->bind_param("s",$_SESSION['user_email']);
     $stmt->execute();
     $result3 = $stmt->get_result();
-    $_SESSION['mentor_tokens']=$result3;
-    $tokens_data = array(
-        "tokens"=>$result3
-    );
-    echo json_encode($result3);
-
+    
+    if ($row = $result3->fetch_assoc()) {
+        $_SESSION['mentor_tokens'] = $row['tokens'];
+        $tokens_data = array(
+            "tokens" => $row['tokens']
+        );
+        echo json_encode($tokens_data);
+    } else {
+        echo json_encode(['error' => 'Error fetching tokens']);
+    }
 }
+
 $conn->close();
 }
 ?>
