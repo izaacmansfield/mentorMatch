@@ -308,6 +308,29 @@ elseif($action==="send_match"){
        // Output the JSON encoded data
        echo json_encode($rows_data);
     }
+elseif($action==="add_tokens"){
+    $add_value=10;
+    $_SESSION['mentor_tokens']+=$add_value;
+    $sql ="UPDATE mentor_information2 set tokens= (?) where email=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is",$_SESSION['mentor_tokens'],$_SESSION['user_email']);
+    $stmt->execute();
+
+
+}
+elseif($action==="display_tokens"){
+    $sql ="SELECT tokens from mentor_information2 where email=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s",$_SESSION['user_email']);
+    $stmt->execute();
+    $result3 = $stmt->get_result();
+    $_SESSION['mentor_tokens']=$result3;
+    $tokens_data = array(
+        "tokens"=>$result3
+    );
+    echo json_encode($result3);
+
+}
 $conn->close();
 }
 ?>

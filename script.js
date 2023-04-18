@@ -5,6 +5,7 @@ var row_num2=1;
 
 
 
+
 async function checkLogin(event) {
   event.preventDefault();
 
@@ -284,6 +285,7 @@ async function send_match(status){
    } 
    else if (status === 'accepted') {
           animateCheck();
+          add_tokens();
       }
   const response = await fetch("user_actions.php",{
     method: "POST",
@@ -326,4 +328,32 @@ async function populateMatch() {
 
     container.appendChild(matchDiv);
   });
+}
+async function add_tokens(){
+  display_tokens();
+  const formdata = new FormData();
+  formdata.append("action", "add_tokens");
+  formdata.append("add_value", "10");
+  const response = await fetch("user_actions.php", {
+    method: "POST",
+    body: formdata,
+  });
+
+
+}
+async function sub_tokens(){
+
+}
+async function display_tokens(){
+  const formdata = new FormData();
+  formdata.append("action", "display_tokens");
+  const response = await fetch("user_actions.php", {
+    method: "POST",
+    body: formdata,
+  });
+
+  const data_tokens= await response.json()
+  document.getElementById('tokens').innerHTML=data_tokens.tokens;
+
+
 }
