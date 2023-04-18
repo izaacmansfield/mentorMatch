@@ -366,7 +366,7 @@ async function display_tokens(){
   });
 
   const data_tokens= await response.json()
-  document.getElementById('tokens').innerHTML=data_tokens.tokens;
+  document.getElementById('tokens').innerHTML=data_tokens.tokens + " T-Bucks";
 
 
 }
