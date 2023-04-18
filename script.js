@@ -333,7 +333,7 @@ async function add_tokens(){
   display_tokens();
   const formdata = new FormData();
   formdata.append("action", "add_tokens");
-  formdata.append("add_value", "10");
+  // formdata.append("add_value", "10");
   const response = await fetch("user_actions.php", {
     method: "POST",
     body: formdata,
@@ -342,8 +342,21 @@ async function add_tokens(){
 
 }
 async function sub_tokens(){
-
+  display_tokens();
+  const formdata = new FormData();
+  formdata.append("action", "sub_tokens");
+  // formdata.append("sub_value", "50");
+  const response = await fetch("user_actions.php", {
+    method: "POST",
+    body: formdata,
+  });
 }
+
+function buy_card(){
+  sub_tokens();
+  alert("This reward will be sent to your email!");
+}
+
 async function display_tokens(){
   const formdata = new FormData();
   formdata.append("action", "display_tokens");

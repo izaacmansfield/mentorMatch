@@ -318,6 +318,16 @@ elseif($action==="add_tokens"){
 
 
 }
+
+elseif($action==="sub_tokens"){
+    $sub_value=50;
+    $_SESSION['mentor_tokens']-=$sub_value;
+    $sql ="UPDATE mentor_information2 set tokens= (?) where email=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is",$_SESSION['mentor_tokens'],$_SESSION['user_email']);
+    $stmt->execute();
+}
+
 elseif($action==="display_tokens"){
     $sql ="SELECT tokens from mentor_information2 where email=?";
     $stmt = $conn->prepare($sql);
