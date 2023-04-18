@@ -27,6 +27,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    padding-bottom: 5px;
   }
   
   .logo {
@@ -96,7 +97,7 @@ body {
   }
   
   .menu-bar {
-    background-color: #FFC627;
+    background-color: #8C1D40;
     padding: 1rem;
     text-align: center;
     font-weight: bold;
@@ -117,7 +118,7 @@ body {
   
   li a {
     display: block;
-    color: #8C1D40;
+    color: #FFC627;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
